@@ -1,24 +1,16 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import Mapbox from "@rnmapbox/maps";
+import { Stack } from "expo-router";
+import { useEffect } from "react";
+import { MAPBOX_ACCESS_TOKEN } from "../config/mapbox";
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+// Configuration de Mapbox
+Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  useEffect(() => {
+    // Initialisation de Mapbox - pas besoin de setConnected dans les nouvelles versions
+    console.log('Mapbox initialisé avec le token:', MAPBOX_ACCESS_TOKEN ? '✅ Configuré' : '❌ Non configuré');
+  }, []);
 
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+  return <Stack />;
 }
