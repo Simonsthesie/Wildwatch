@@ -2,17 +2,18 @@
 
 ## ✅ Configuration terminée !
 
-Vos tokens Mapbox sont déjà configurés dans l'application :
+Vos tokens Mapbox sont configurés via les variables d'environnement dans le fichier `.env` :
 
-- **Token public** : `pk.eyJ1Ijoic3JheW5hdWQtbGFtb2JpbGVyeSIsImEiOiJjbWZmdTRienQwb2F4MmtzYmprNWxieWZwIn0.mgySs3rW_6jA7hEKCF7ycw`
-- **Token de téléchargement** : `sk.eyJ1Ijoic3JheW5hdWQtbGFtb2JpbGVyeSIsImEiOiJjbWZoY2hzMGUwYmtoMmlxdG5vdHRneXFlIn0.NDrbW7jA9GC9txgBp_lVJw`
+- **Token public** : Configuré via `EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN`
+- **Token de téléchargement** : Configuré via `MAPBOX_DOWNLOAD_TOKEN`
 
-## Configuration automatique
+## Configuration sécurisée
 
 Les tokens sont configurés via les variables d'environnement dans :
+- `.env` - Fichier de configuration local (NE PAS COMMITER)
+- `.env.example` - Modèle de configuration (à copier vers .env)
 - `config/mapbox.ts` - Configuration des tokens
 - `app.config.js` - Configuration Expo avec les permissions
-- `package.json` - Scripts de lancement avec les variables d'environnement
 
 ### 4. Configuration native (si nécessaire)
 Le prebuild a déjà configuré les fichiers natifs, mais si vous rencontrez des problèmes :
