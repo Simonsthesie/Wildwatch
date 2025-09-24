@@ -1,19 +1,20 @@
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import {
-    Alert,
-    Image,
-    KeyboardAvoidingView,
-    Modal,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { ObservationFormData } from '../types/observation';
+import { Button } from './ui';
 
 interface ObservationModalProps {
   visible: boolean;
@@ -135,7 +136,7 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
 
           <View style={styles.form}>
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Nom de l'animal *</Text>
+              <Text style={styles.label}>{"Nom de l'animal *"}</Text>
               <TextInput
                 style={styles.input}
                 value={formData.name}
@@ -146,7 +147,7 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Date d'observation</Text>
+              <Text style={styles.label}>{"Date d'observation"}</Text>
               <TextInput
                 style={styles.input}
                 value={formData.date}
@@ -176,29 +177,35 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
                 )}
               </View>
               <View style={styles.imageButtons}>
-                <TouchableOpacity style={styles.imageButton} onPress={handleCamera}>
-                  <Text style={styles.imageButtonText}>📷 Appareil photo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.imageButton} onPress={handleImagePicker}>
-                  <Text style={styles.imageButtonText}>🖼️ Galerie</Text>
-                </TouchableOpacity>
+                <Button 
+                  title="📷 Appareil photo" 
+                  onPress={handleCamera} 
+                  variant="primary"
+                  size="small"
+                />
+                <Button 
+                  title="🖼️ Galerie" 
+                  onPress={handleImagePicker} 
+                  variant="primary"
+                  size="small"
+                />
               </View>
             </View>
           </View>
 
           <View style={styles.buttons}>
-            <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-              <Text style={styles.cancelButtonText}>Annuler</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.saveButton, isLoading && styles.saveButtonDisabled]}
-              onPress={handleSave}
+            <Button 
+              title="Annuler" 
+              onPress={handleCancel} 
+              variant="outline"
+            />
+            <Button 
+              title={isLoading ? 'Enregistrement...' : 'Enregistrer'} 
+              onPress={handleSave} 
+              variant="success"
+              loading={isLoading}
               disabled={isLoading}
-            >
-              <Text style={styles.saveButtonText}>
-                {isLoading ? 'Enregistrement...' : 'Enregistrer'}
-              </Text>
-            </TouchableOpacity>
+            />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -296,53 +303,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
   },
-  imageButton: {
-    flex: 1,
-    backgroundColor: '#007AFF',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  imageButtonText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: '600',
-  },
   buttons: {
     flexDirection: 'row',
     padding: 20,
     gap: 12,
-  },
-  cancelButton: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  cancelButtonText: {
-    color: '#666',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  saveButton: {
-    flex: 1,
-    backgroundColor: '#34C759',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  saveButtonDisabled: {
-    backgroundColor: '#ccc',
-  },
-  saveButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
   },
 });

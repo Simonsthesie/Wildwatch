@@ -1,19 +1,20 @@
 import * as ImagePicker from 'expo-image-picker';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert,
-    Image,
-    KeyboardAvoidingView,
-    Modal,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { Observation, ObservationFormData } from '../types/observation';
+import { Button } from './ui';
 
 interface EditObservationModalProps {
   visible: boolean;
@@ -163,7 +164,7 @@ export const EditObservationModal: React.FC<EditObservationModalProps> = ({
       >
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
-            <Text style={styles.title}>Modifier l'observation</Text>
+            <Text style={styles.title}>{"Modifier l'observation"}</Text>
             <Text style={styles.subtitle}>
               Position: {observation.latitude.toFixed(6)}, {observation.longitude.toFixed(6)}
             </Text>
@@ -171,7 +172,7 @@ export const EditObservationModal: React.FC<EditObservationModalProps> = ({
 
           <View style={styles.form}>
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Nom de l'observation</Text>
+              <Text style={styles.label}>{"Nom de l'observation"}</Text>
               <TextInput
                 style={styles.input}
                 value={formData.name}
@@ -182,7 +183,7 @@ export const EditObservationModal: React.FC<EditObservationModalProps> = ({
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Date d'observation</Text>
+              <Text style={styles.label}>{"Date d'observation"}</Text>
               <TextInput
                 style={styles.input}
                 value={formData.date}
@@ -212,34 +213,43 @@ export const EditObservationModal: React.FC<EditObservationModalProps> = ({
                 )}
               </View>
               <View style={styles.imageButtons}>
-                <TouchableOpacity style={styles.imageButton} onPress={handleCamera}>
-                  <Text style={styles.imageButtonText}>📷 Appareil photo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.imageButton} onPress={handleImagePicker}>
-                  <Text style={styles.imageButtonText}>🖼️ Galerie</Text>
-                </TouchableOpacity>
+                <Button 
+                  title="📷 Appareil photo" 
+                  onPress={handleCamera} 
+                  variant="primary"
+                  size="small"
+                />
+                <Button 
+                  title="🖼️ Galerie" 
+                  onPress={handleImagePicker} 
+                  variant="primary"
+                  size="small"
+                />
               </View>
             </View>
           </View>
 
           <View style={styles.buttons}>
-            <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
-              <Text style={styles.deleteButtonText}>🗑️ Supprimer</Text>
-            </TouchableOpacity>
+            <Button 
+              title="🗑️ Supprimer" 
+              onPress={handleDelete} 
+              variant="danger"
+              size="small"
+            />
             
-            <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-              <Text style={styles.cancelButtonText}>Annuler</Text>
-            </TouchableOpacity>
+            <Button 
+              title="Annuler" 
+              onPress={handleCancel} 
+              variant="outline"
+            />
             
-            <TouchableOpacity
-              style={[styles.saveButton, isLoading && styles.saveButtonDisabled]}
-              onPress={handleSave}
+            <Button 
+              title={isLoading ? 'Sauvegarde...' : 'Sauvegarder'} 
+              onPress={handleSave} 
+              variant="success"
+              loading={isLoading}
               disabled={isLoading}
-            >
-              <Text style={styles.saveButtonText}>
-                {isLoading ? 'Sauvegarde...' : 'Sauvegarder'}
-              </Text>
-            </TouchableOpacity>
+            />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -337,65 +347,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
   },
-  imageButton: {
-    flex: 1,
-    backgroundColor: '#007AFF',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  imageButtonText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: '600',
-  },
   buttons: {
     flexDirection: 'row',
     padding: 20,
     gap: 8,
-  },
-  deleteButton: {
-    backgroundColor: '#ff4444',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  deleteButtonText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  cancelButton: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  cancelButtonText: {
-    color: '#666',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  saveButton: {
-    flex: 1,
-    backgroundColor: '#34C759',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  saveButtonDisabled: {
-    backgroundColor: '#ccc',
-  },
-  saveButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
   },
 });

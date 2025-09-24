@@ -14,9 +14,3 @@ export interface ObservationFormData {
   date: string;
   imageUri?: string;
 }
-
-export interface MapMarker {
-  id: string;
-  coordinate: [number, number];
-  observation: Observation;
-}

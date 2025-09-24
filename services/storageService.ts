@@ -50,13 +50,4 @@ export class StorageService {
       throw error;
     }
   }
-
-  static async clearAllObservations(): Promise<void> {
-    try {
-      await AsyncStorage.removeItem(OBSERVATIONS_KEY);
-    } catch (error) {
-      console.error('Erreur lors de la suppression de toutes les observations:', error);
-      throw error;
-    }
-  }
 }

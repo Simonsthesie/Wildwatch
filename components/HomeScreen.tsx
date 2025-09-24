@@ -1,7 +1,8 @@
 import * as Location from 'expo-location';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { MapScreen } from './MapScreen';
+import { Button } from './ui';
 
 interface HomeScreenProps {
   location: Location.LocationObject;
@@ -86,13 +87,19 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ location, onRefresh, onS
       </View>
 
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.mapButton} onPress={onShowMap}>
-          <Text style={styles.mapButtonText}>🗺️ Voir sur la carte</Text>
-        </TouchableOpacity>
+        <Button 
+          title="🗺️ Voir sur la carte" 
+          onPress={onShowMap} 
+          variant="success"
+          size="large"
+        />
         
-        <TouchableOpacity style={styles.refreshButton} onPress={onRefresh}>
-          <Text style={styles.refreshButtonText}>🔄 Actualiser</Text>
-        </TouchableOpacity>
+        <Button 
+          title="🔄 Actualiser" 
+          onPress={onRefresh} 
+          variant="primary"
+          size="large"
+        />
       </View>
 
       <View style={styles.footer}>
@@ -180,32 +187,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
     marginBottom: 20,
-  },
-  mapButton: {
-    flex: 1,
-    backgroundColor: '#34C759',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  mapButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  refreshButton: {
-    flex: 1,
-    backgroundColor: '#007AFF',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  refreshButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
   },
   footer: {
     alignItems: 'center',

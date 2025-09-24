@@ -4,9 +4,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { MAP_CONFIG } from '../config/mapbox';
 import { StorageService } from '../services/storageService';
-import { Observation } from '../types/observation';
+import { Observation, ObservationFormData } from '../types/observation';
 import { EditObservationModal } from './EditObservationModal';
 import { ObservationModal } from './ObservationModal';
+import { ControlButton } from './ui';
 
 interface MapScreenProps {
   location: Location.LocationObject;
@@ -22,6 +23,7 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
   const [selectedObservation, setSelectedObservation] = useState<Observation | null>(null);
   const [selectedCoordinate, setSelectedCoordinate] = useState<[number, number]>([0, 0]);
   const [newMarkerAnimation] = useState(new Animated.Value(0));
+  const [markersKey, setMarkersKey] = useState(0); // Clé pour forcer le re-rendu des marqueurs
 
   useEffect(() => {
     loadObservations();
@@ -42,6 +44,8 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
     try {
       const obs = await StorageService.getObservations();
       setObservations(obs);
+      // Incrémenter la clé pour forcer le re-rendu des marqueurs
+      setMarkersKey(prev => prev + 1);
     } catch (error) {
       console.error('Erreur lors du chargement des observations:', error);
     }
@@ -57,7 +61,7 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
     }
   };
 
-  const handleMapPress = (event: any) => {
+  const handleMapPress = (event: { geometry: { coordinates: [number, number] } }) => {
     const { geometry } = event;
     if (geometry && geometry.coordinates) {
       setSelectedCoordinate([geometry.coordinates[0], geometry.coordinates[1]]);
@@ -70,7 +74,7 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
     setShowEditModal(true);
   };
 
-  const handleSaveObservation = async (formData: any) => {
+  const handleSaveObservation = async (formData: ObservationFormData) => {
     try {
       const newObservation: Observation = {
         id: Date.now().toString(),
@@ -105,7 +109,7 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
     }
   };
 
-  const handleUpdateObservation = async (id: string, formData: any) => {
+  const handleUpdateObservation = async (id: string, formData: ObservationFormData) => {
     try {
       await StorageService.updateObservation(id, formData);
       await loadObservations();
@@ -167,7 +171,7 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
         {/* Marqueurs des observations */}
         {observations.map((observation, index) => (
           <Mapbox.PointAnnotation
-            key={observation.id}
+            key={`${observation.id}-${markersKey}`}
             id={`observation-${observation.id}`}
             coordinate={[observation.longitude, observation.latitude]}
             onSelected={() => handleMarkerPress(observation)}
@@ -208,13 +212,17 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
 
       {/* Boutons de contrôle */}
       <View style={styles.controls}>
-        <TouchableOpacity style={styles.controlButton} onPress={centerOnUser}>
-          <Text style={styles.controlButtonText}>🎯</Text>
-        </TouchableOpacity>
+        <ControlButton 
+          title="🎯" 
+          onPress={centerOnUser} 
+          variant="default"
+        />
         
-        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-          <Text style={styles.closeButtonText}>✕</Text>
-        </TouchableOpacity>
+        <ControlButton 
+          title="✕" 
+          onPress={onClose} 
+          variant="close"
+        />
       </View>
 
       {/* Informations de position */}
@@ -259,46 +267,6 @@ const styles = StyleSheet.create({
     top: 60,
     right: 20,
     gap: 10,
-  },
-  controlButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  controlButtonText: {
-    fontSize: 20,
-  },
-  closeButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#ff4444',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  closeButtonText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
   },
   infoOverlay: {
     position: 'absolute',

@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button } from './ui';
 
 interface UnauthorizedScreenProps {
   onOpenSettings: () => void;
@@ -23,13 +24,19 @@ export const UnauthorizedScreen: React.FC<UnauthorizedScreenProps> = ({
       </Text>
       
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.primaryButton} onPress={onOpenSettings}>
-          <Text style={styles.primaryButtonText}>Ouvrir les paramètres</Text>
-        </TouchableOpacity>
+        <Button 
+          title="Ouvrir les paramètres" 
+          onPress={onOpenSettings} 
+          variant="primary"
+          fullWidth
+        />
         
-        <TouchableOpacity style={styles.secondaryButton} onPress={onRetry}>
-          <Text style={styles.secondaryButtonText}>Réessayer</Text>
-        </TouchableOpacity>
+        <Button 
+          title="Réessayer" 
+          onPress={onRetry} 
+          variant="outline"
+          fullWidth
+        />
       </View>
     </View>
   );
@@ -72,31 +79,5 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     gap: 12,
-  },
-  primaryButton: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  primaryButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  secondaryButton: {
-    backgroundColor: 'transparent',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#007AFF',
-  },
-  secondaryButtonText: {
-    color: '#007AFF',
-    fontSize: 16,
-    fontWeight: '600',
   },
 });
