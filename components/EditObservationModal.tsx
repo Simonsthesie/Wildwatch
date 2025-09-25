@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { OBSERVATION_ICONS } from '../constants';
 import { colors, inputStyles, theme, typography } from '../styles';
 import { Observation, ObservationFormData } from '../types/observation';
 import { Button } from './ui';
@@ -189,12 +190,7 @@ export const EditObservationModal: React.FC<EditObservationModalProps> = ({
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Type d'observation</Text>
               <View style={styles.iconSelector}>
-                {[
-                  { icon: '🦌', label: 'Animal' },
-                  { icon: '🍄', label: 'Champignon' },
-                  { icon: '🌿', label: 'Plante' },
-                  { icon: '🦅', label: 'Oiseau' },
-                ].map((option) => (
+                {OBSERVATION_ICONS.map((option) => (
                   <TouchableOpacity
                     key={option.icon}
                     style={[

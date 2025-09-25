@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-    ActivityIndicator,
-    StyleSheet,
-    Text,
-    TextStyle,
-    TouchableOpacity,
-    ViewStyle,
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  ViewStyle,
 } from 'react-native';
 import { buttonStyles, colors, theme } from '../../styles';
 
@@ -65,7 +65,7 @@ export const Button: React.FC<ButtonProps> = ({
           color={variant === 'outline' || variant === 'ghost' ? colors.primary : colors.textInverse} 
         />
       ) : (
-        <Text style={buttonTextStyle} numberOfLines={0} textAlign="center">{title}</Text>
+        <Text style={[buttonTextStyle, { textAlign: 'center' }]} numberOfLines={0}>{title}</Text>
       )}
     </TouchableOpacity>
   );

@@ -1,14 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { STORAGE_KEYS } from '../constants';
 import { Observation } from '../types/observation';
-
-const OBSERVATIONS_KEY = 'wildwatch_observations';
 
 export class StorageService {
   static async saveObservation(observation: Observation): Promise<void> {
     try {
       const existingObservations = await this.getObservations();
       const updatedObservations = [...existingObservations, observation];
-      await AsyncStorage.setItem(OBSERVATIONS_KEY, JSON.stringify(updatedObservations));
+      await AsyncStorage.setItem(STORAGE_KEYS.OBSERVATIONS, JSON.stringify(updatedObservations));
     } catch (error) {
       console.error('Erreur lors de la sauvegarde de l\'observation:', error);
       throw error;
@@ -17,7 +16,7 @@ export class StorageService {
 
   static async getObservations(): Promise<Observation[]> {
     try {
-      const observationsJson = await AsyncStorage.getItem(OBSERVATIONS_KEY);
+      const observationsJson = await AsyncStorage.getItem(STORAGE_KEYS.OBSERVATIONS);
       return observationsJson ? JSON.parse(observationsJson) : [];
     } catch (error) {
       console.error('Erreur lors de la récupération des observations:', error);
@@ -33,7 +32,7 @@ export class StorageService {
           ? { ...obs, ...updatedObservation, updatedAt: new Date().toISOString() }
           : obs
       );
-      await AsyncStorage.setItem(OBSERVATIONS_KEY, JSON.stringify(updatedObservations));
+      await AsyncStorage.setItem(STORAGE_KEYS.OBSERVATIONS, JSON.stringify(updatedObservations));
     } catch (error) {
       console.error('Erreur lors de la mise à jour de l\'observation:', error);
       throw error;
@@ -44,7 +43,7 @@ export class StorageService {
     try {
       const observations = await this.getObservations();
       const filteredObservations = observations.filter(obs => obs.id !== id);
-      await AsyncStorage.setItem(OBSERVATIONS_KEY, JSON.stringify(filteredObservations));
+      await AsyncStorage.setItem(STORAGE_KEYS.OBSERVATIONS, JSON.stringify(filteredObservations));
     } catch (error) {
       console.error('Erreur lors de la suppression de l\'observation:', error);
       throw error;

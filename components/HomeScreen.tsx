@@ -2,6 +2,7 @@ import * as Location from 'expo-location';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colors, theme } from '../styles';
+import { formatAccuracy, formatAltitude, formatCoordinate, formatSpeed } from '../utils/formatters';
 import { MapScreen } from './MapScreen';
 
 interface HomeScreenProps {
@@ -61,17 +62,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ location, onRefresh, onS
     };
   }, []);
 
-  const formatCoordinate = (coord: number, isLatitude: boolean) => {
-    const direction = isLatitude 
-      ? (coord >= 0 ? 'N' : 'S')
-      : (coord >= 0 ? 'E' : 'W');
-    return `${Math.abs(coord).toFixed(6)}° ${direction}`;
-  };
-
-  const formatAccuracy = (accuracy: number | null) => {
-    if (!accuracy) return 'N/A';
-    return accuracy < 1000 ? `${Math.round(accuracy)}m` : `${(accuracy / 1000).toFixed(1)}km`;
-  };
 
   if (showMap) {
     return (
@@ -161,10 +151,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ location, onRefresh, onS
               <Text style={styles.infoLabel}>Altitude</Text>
             </View>
             <Text style={styles.infoValue}>
-              {location.coords.altitude 
-                ? `${Math.round(location.coords.altitude)}m`
-                : 'N/A'
-              }
+              {formatAltitude(location.coords.altitude)}
             </Text>
           </View>
 
@@ -174,10 +161,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ location, onRefresh, onS
               <Text style={styles.infoLabel}>Vitesse</Text>
             </View>
             <Text style={styles.infoValue}>
-              {location.coords.speed 
-                ? `${Math.round(location.coords.speed * 3.6)} km/h`
-                : 'N/A'
-              }
+              {formatSpeed(location.coords.speed)}
             </Text>
           </View>
         </View>
