@@ -2,7 +2,7 @@ import Mapbox from '@rnmapbox/maps';
 import * as Location from 'expo-location';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { MAP_CONFIG } from '../config/mapbox';
+import { MAP_CONFIG, MAPBOX_ACCESS_TOKEN } from '../config/mapbox';
 import { StorageService } from '../services/storageService';
 import { Observation, ObservationFormData } from '../types/observation';
 import { EditObservationModal } from './EditObservationModal';
@@ -26,6 +26,15 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
   const [markersKey, setMarkersKey] = useState(0); // Clé pour forcer le re-rendu des marqueurs
 
   useEffect(() => {
+    // Vérifier que le token Mapbox est configuré
+    if (!MAPBOX_ACCESS_TOKEN) {
+      console.error('❌ Token Mapbox non configuré');
+      return;
+    }
+    
+    // S'assurer que Mapbox est initialisé
+    Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
+    
     loadObservations();
   }, []);
 
@@ -61,10 +70,10 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
     }
   };
 
-  const handleMapPress = (event: { geometry: { coordinates: [number, number] } }) => {
-    const { geometry } = event;
-    if (geometry && geometry.coordinates) {
-      setSelectedCoordinate([geometry.coordinates[0], geometry.coordinates[1]]);
+  const handleMapPress = (feature: any) => {
+    const coordinates = feature.geometry?.coordinates;
+    if (coordinates && coordinates.length >= 2) {
+      setSelectedCoordinate([coordinates[0], coordinates[1]]);
       setShowObservationModal(true);
     }
   };
@@ -146,6 +155,8 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
         compassEnabled={MAP_CONFIG.compassEnabled}
         scaleBarEnabled={MAP_CONFIG.scaleBarEnabled}
         onPress={handleMapPress}
+        onDidFinishLoadingMap={() => console.log('✅ Carte chargée avec succès')}
+        onMapLoadingError={() => console.error('❌ Erreur de chargement de la carte')}
       >
         {/* Marqueur de position utilisateur */}
         <Mapbox.Camera
