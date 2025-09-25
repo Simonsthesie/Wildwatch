@@ -258,29 +258,31 @@ export const EditObservationModal: React.FC<EditObservationModalProps> = ({
             </View>
           </View>
 
-          <View style={styles.buttons}>
-            <Button 
-              title="🗑️ Supprimer" 
-              onPress={handleDelete} 
-              variant="danger"
-              size="small"
-            />
-            
-            <Button 
-              title="Annuler" 
-              onPress={handleCancel} 
-              variant="outline"
-            />
-            
-            <Button 
-              title={isLoading ? 'Sauvegarde...' : 'Sauvegarder'} 
-              onPress={handleSave} 
-              variant="success"
-              loading={isLoading}
-              disabled={isLoading}
-            />
-          </View>
         </ScrollView>
+        
+        {/* Boutons fixes en bas */}
+        <View style={styles.buttons}>
+          <Button 
+            title="🗑️ Supprimer" 
+            onPress={handleDelete} 
+            variant="danger"
+            size="small"
+          />
+          
+          <Button 
+            title="Annuler" 
+            onPress={handleCancel} 
+            variant="outline"
+          />
+          
+          <Button 
+            title={isLoading ? 'Sauvegarde...' : 'Sauvegarder'} 
+            onPress={handleSave} 
+            variant="success"
+            loading={isLoading}
+            disabled={isLoading}
+          />
+        </View>
       </KeyboardAvoidingView>
     </Modal>
   );
@@ -371,9 +373,9 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: theme.spacing.lg,
-    paddingTop: theme.spacing.md,
-    gap: theme.spacing.md,
+    padding: theme.spacing.md,
+    paddingTop: theme.spacing.sm,
+    gap: theme.spacing.sm,
     backgroundColor: colors.background,
     borderTopWidth: 1,
     borderTopColor: colors.gray200,

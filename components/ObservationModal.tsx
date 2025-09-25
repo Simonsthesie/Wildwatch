@@ -391,9 +391,9 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: theme.spacing.lg,
-    paddingTop: theme.spacing.md,
-    gap: theme.spacing.md,
+    padding: theme.spacing.md,
+    paddingTop: theme.spacing.sm,
+    gap: theme.spacing.sm,
     backgroundColor: colors.background,
     borderTopWidth: 1,
     borderTopColor: colors.gray200,
