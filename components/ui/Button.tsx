@@ -7,8 +7,9 @@ import {
     TouchableOpacity,
     ViewStyle,
 } from 'react-native';
+import { buttonStyles, colors, theme } from '../../styles';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'outline' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'outline' | 'ghost' | 'forest' | 'earth' | 'moss' | 'sunset';
 export type ButtonSize = 'small' | 'medium' | 'large';
 
 interface ButtonProps {
@@ -61,10 +62,10 @@ export const Button: React.FC<ButtonProps> = ({
       {loading ? (
         <ActivityIndicator 
           size="small" 
-          color={variant === 'outline' || variant === 'ghost' ? '#007AFF' : 'white'} 
+          color={variant === 'outline' || variant === 'ghost' ? colors.primary : colors.textInverse} 
         />
       ) : (
-        <Text style={buttonTextStyle}>{title}</Text>
+        <Text style={buttonTextStyle} numberOfLines={0} textAlign="center">{title}</Text>
       )}
     </TouchableOpacity>
   );
@@ -73,97 +74,112 @@ export const Button: React.FC<ButtonProps> = ({
 const styles = StyleSheet.create({
   // Styles de base
   base: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 12,
-    flexDirection: 'row',
+    ...buttonStyles.base,
   },
   fullWidth: {
     width: '100%',
   },
   
-  // Variants de couleur
+  // Variants de couleur - Thème sauvage
   primary: {
-    backgroundColor: '#007AFF',
+    ...buttonStyles.primary,
   },
   secondary: {
-    backgroundColor: '#8E8E93',
+    backgroundColor: colors.gray500,
   },
   success: {
-    backgroundColor: '#34C759',
+    ...buttonStyles.success,
   },
   danger: {
-    backgroundColor: '#FF3B30',
+    ...buttonStyles.error,
   },
   outline: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: '#007AFF',
+    ...buttonStyles.outline,
   },
   ghost: {
     backgroundColor: 'transparent',
   },
+  forest: {
+    ...buttonStyles.forest,
+  },
+  earth: {
+    ...buttonStyles.earth,
+  },
+  moss: {
+    ...buttonStyles.moss,
+  },
+  sunset: {
+    backgroundColor: colors.sunset,
+    borderColor: colors.earth,
+  },
   
   // Tailles
   small: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 8,
+    ...buttonStyles.small,
   },
   medium: {
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 12,
+    ...buttonStyles.base,
   },
   large: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
+    ...buttonStyles.large,
+    minHeight: 60,
+    paddingVertical: theme.spacing.md,
   },
   
   // États
   disabled: {
-    backgroundColor: '#CCCCCC',
-    borderColor: '#CCCCCC',
+    backgroundColor: colors.gray300,
+    borderColor: colors.gray300,
   },
   
   // Styles de texte
   text: {
-    fontWeight: '600',
-    textAlign: 'center',
+    ...buttonStyles.text,
   },
   primaryText: {
-    color: 'white',
+    ...buttonStyles.text,
   },
   secondaryText: {
-    color: 'white',
+    color: colors.textInverse,
   },
   successText: {
-    color: 'white',
+    ...buttonStyles.text,
   },
   dangerText: {
-    color: 'white',
+    ...buttonStyles.text,
   },
   outlineText: {
-    color: '#007AFF',
+    ...buttonStyles.textOutline,
   },
   ghostText: {
-    color: '#007AFF',
+    color: colors.primary,
+  },
+  forestText: {
+    ...buttonStyles.text,
+  },
+  earthText: {
+    ...buttonStyles.text,
+  },
+  mossText: {
+    ...buttonStyles.text,
+  },
+  sunsetText: {
+    ...buttonStyles.text,
   },
   
   // Tailles de texte
   smallText: {
-    fontSize: 14,
+    fontSize: theme.fontSize.sm,
   },
   mediumText: {
-    fontSize: 16,
+    fontSize: theme.fontSize.base,
   },
   largeText: {
-    fontSize: 18,
+    fontSize: theme.fontSize.lg,
   },
   
   // Texte désactivé
   disabledText: {
-    color: '#999999',
+    color: colors.textTertiary,
   },
 });

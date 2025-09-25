@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { colors, inputStyles, theme, typography } from '../styles';
 import { ObservationFormData } from '../types/observation';
 import { Button } from './ui';
 
@@ -33,6 +34,7 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
     name: '',
     date: new Date().toISOString().split('T')[0],
     imageUri: undefined,
+    icon: '🦌',
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -97,6 +99,7 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
         name: '',
         date: new Date().toISOString().split('T')[0],
         imageUri: undefined,
+        icon: '🦌',
       });
       onClose();
     } catch (error) {
@@ -111,6 +114,7 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
       name: '',
       date: new Date().toISOString().split('T')[0],
       imageUri: undefined,
+      icon: '🦌',
     });
     onClose();
   };
@@ -127,12 +131,17 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-          <View style={styles.header}>
-            <Text style={styles.title}>Nouvelle observation</Text>
-            <Text style={styles.subtitle}>
-              Position: {coordinate[1].toFixed(6)}, {coordinate[0].toFixed(6)}
-            </Text>
-          </View>
+              <View style={styles.header}>
+                <View style={styles.headerContent}>
+                  <Text style={styles.title}>🦌 Nouvelle observation</Text>
+                  <Text style={styles.subtitle}>
+                    📍 {coordinate[1].toFixed(6)}, {coordinate[0].toFixed(6)}
+                  </Text>
+                </View>
+                <TouchableOpacity style={styles.closeButton} onPress={handleCancel}>
+                  <Text style={styles.closeButtonText}>✕</Text>
+                </TouchableOpacity>
+              </View>
 
           <View style={styles.form}>
             <View style={styles.inputGroup}>
@@ -144,6 +153,35 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
                 placeholder="Ex: Renard roux, Aigle royal..."
                 placeholderTextColor="#999"
               />
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Type d'observation</Text>
+              <View style={styles.iconSelector}>
+                {[
+                  { icon: '🦌', label: 'Animal' },
+                  { icon: '🍄', label: 'Champignon' },
+                  { icon: '🌿', label: 'Plante' },
+                  { icon: '🦅', label: 'Oiseau' },
+                ].map((option) => (
+                  <TouchableOpacity
+                    key={option.icon}
+                    style={[
+                      styles.iconOption,
+                      formData.icon === option.icon && styles.iconOptionSelected
+                    ]}
+                    onPress={() => setFormData(prev => ({ ...prev, icon: option.icon }))}
+                  >
+                    <Text style={styles.iconText}>{option.icon}</Text>
+                    <Text style={[
+                      styles.iconLabel,
+                      formData.icon === option.icon && styles.iconLabelSelected
+                    ]}>
+                      {option.label}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>
 
             <View style={styles.inputGroup}>
@@ -216,50 +254,63 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
   },
   header: {
-    padding: 20,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    padding: theme.spacing.lg,
+    backgroundColor: colors.primary,
+    borderTopLeftRadius: theme.borderRadius.xl,
+    borderTopRightRadius: theme.borderRadius.xl,
+  },
+  headerContent: {
+    flex: 1,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 8,
+    ...typography.h3,
+    color: colors.textInverse,
+    marginBottom: theme.spacing.xs,
   },
   subtitle: {
-    fontSize: 14,
-    color: '#666',
-    fontFamily: 'monospace',
+    ...typography.monoSmall,
+    color: colors.textInverse,
+    opacity: 0.9,
+  },
+  closeButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: theme.spacing.md,
+  },
+  closeButtonText: {
+    color: colors.textInverse,
+    fontSize: theme.fontSize.lg,
+    fontWeight: theme.fontWeight.bold,
   },
   form: {
-    padding: 20,
+    padding: theme.spacing.lg,
   },
   inputGroup: {
-    marginBottom: 20,
+    marginBottom: theme.spacing.lg,
   },
   label: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 8,
+    ...typography.label,
+    color: colors.textPrimary,
+    marginBottom: theme.spacing.sm,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 12,
-    fontSize: 16,
-    backgroundColor: 'white',
+    ...inputStyles.base,
   },
   imageContainer: {
-    marginBottom: 12,
+    marginBottom: theme.spacing.sm,
   },
   imageWrapper: {
     position: 'relative',
@@ -268,7 +319,7 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 150,
-    borderRadius: 8,
+    borderRadius: theme.borderRadius.md,
   },
   removeImageButton: {
     position: 'absolute',
@@ -277,35 +328,67 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#ff4444',
+    backgroundColor: colors.error,
     justifyContent: 'center',
     alignItems: 'center',
   },
   removeImageText: {
-    color: 'white',
-    fontSize: 12,
-    fontWeight: 'bold',
+    color: colors.textInverse,
+    fontSize: theme.fontSize.xs,
+    fontWeight: theme.fontWeight.bold,
   },
   imagePlaceholder: {
     width: 200,
     height: 150,
-    borderRadius: 8,
-    backgroundColor: '#f0f0f0',
+    borderRadius: theme.borderRadius.md,
+    backgroundColor: colors.gray100,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
   },
   imagePlaceholderText: {
-    color: '#999',
-    fontSize: 14,
+    color: colors.textTertiary,
+    fontSize: theme.fontSize.sm,
   },
   imageButtons: {
     flexDirection: 'row',
-    gap: 12,
+    gap: theme.spacing.sm,
   },
   buttons: {
     flexDirection: 'row',
-    padding: 20,
-    gap: 12,
+    padding: theme.spacing.lg,
+    gap: theme.spacing.sm,
+  },
+  iconSelector: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: theme.spacing.sm,
+  },
+  iconOption: {
+    flex: 1,
+    alignItems: 'center',
+    padding: theme.spacing.md,
+    borderRadius: theme.borderRadius.md,
+    backgroundColor: colors.gray100,
+    borderWidth: 2,
+    borderColor: 'transparent',
+  },
+  iconOptionSelected: {
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+  },
+  iconText: {
+    fontSize: 24,
+    marginBottom: theme.spacing.xs,
+  },
+  iconLabel: {
+    ...typography.body,
+    fontSize: theme.fontSize.sm,
+    color: colors.textSecondary,
+    textAlign: 'center',
+  },
+  iconLabelSelected: {
+    color: colors.textInverse,
+    fontWeight: theme.fontWeight.semibold,
   },
 });

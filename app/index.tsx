@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { HomeScreen } from '../components/HomeScreen';
 import { LoadingScreen } from '../components/LoadingScreen';
 import { MapScreen } from '../components/MapScreen';
@@ -7,7 +7,7 @@ import { useCurrentPosition } from '../hooks/useCurrentPosition';
 
 export default function Index() {
   const { location, status, error, requestLocation, openSettings } = useCurrentPosition();
-  const [showMap, setShowMap] = useState(true);
+  const [showMap, setShowMap] = useState(false);
 
   if (status === 'loading') {
     return <LoadingScreen />;

@@ -1,0 +1,766 @@
+/* ============================================
+   WILDWATCH - STYLES GLOBAUX
+   ============================================ */
+
+/* Variables CSS pour la cohérence des couleurs - Thème Nature Sauvage */
+:root {
+  /* Couleurs principales - Nature sauvage */
+  --primary-color: #2D5016; /* Vert forêt profond */
+  --primary-dark: #1A3009; /* Vert très sombre */
+  --primary-light: #4A7C59; /* Vert mousse */
+  
+  /* Couleurs secondaires - Palette naturelle */
+  --success-color: #228B22; /* Vert forest */
+  --success-dark: #006400; /* Vert sombre */
+  --warning-color: #DAA520; /* Or sauvage */
+  --error-color: #8B4513; /* Brun terre */
+  
+  /* Couleurs neutres - Tons terre */
+  --white: #F5F5DC; /* Beige naturel */
+  --black: #2F1B14; /* Brun très sombre */
+  --gray-50: #F0F8E8; /* Vert très clair */
+  --gray-100: #E6F3D6; /* Vert pâle */
+  --gray-200: #CCE7B3; /* Vert clair */
+  --gray-300: #B3D999; /* Vert moyen clair */
+  --gray-400: #99CC80; /* Vert moyen */
+  --gray-500: #7FB366; /* Vert */
+  --gray-600: #66994D; /* Vert foncé */
+  --gray-700: #4D7A33; /* Vert très foncé */
+  --gray-800: #335C1A; /* Vert sombre */
+  --gray-900: #1A3D0A; /* Vert très sombre */
+  
+  /* Couleurs de fond - Nature */
+  --background-primary: #F0F8E8; /* Vert très clair */
+  --background-secondary: #F5F5DC; /* Beige naturel */
+  --background-overlay: rgba(245, 245, 220, 0.95); /* Beige transparent */
+  
+  /* Couleurs de texte - Tons terre */
+  --text-primary: #2F1B14; /* Brun très sombre */
+  --text-secondary: #4A3C2A; /* Brun moyen */
+  --text-tertiary: #6B5B47; /* Brun clair */
+  --text-inverse: #F5F5DC; /* Beige naturel */
+  
+  /* Couleurs spéciales nature */
+  --forest-color: #228B22; /* Vert forêt */
+  --earth-color: #8B4513; /* Brun terre */
+  --moss-color: #4A7C59; /* Vert mousse */
+  --bark-color: #5D4037; /* Brun écorce */
+  --leaf-color: #4CAF50; /* Vert feuille */
+  --sky-color: #87CEEB; /* Bleu ciel */
+  --sunset-color: #FF7F50; /* Orange coucher de soleil */
+  --stone-color: #708090; /* Gris pierre */
+  
+  /* Ombres */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  
+  /* Rayons de bordure */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 50%;
+  
+  /* Espacement */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  
+  /* Typographie */
+  --font-family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+  
+  /* Tailles de police */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+  --font-size-4xl: 40px;
+  
+  /* Poids de police */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+}
+
+/* ============================================
+   STYLES DE BASE
+   ============================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--background-primary);
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================
+   COMPOSANTS COMMUNS
+   ============================================ */
+
+/* Styles spéciaux pour la faune et la nature */
+.btn-forest {
+  background-color: var(--forest-color);
+  color: var(--text-inverse);
+  border: 2px solid var(--primary-dark);
+}
+
+.btn-forest:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-earth {
+  background-color: var(--earth-color);
+  color: var(--text-inverse);
+  border: 2px solid var(--bark-color);
+}
+
+.btn-moss {
+  background-color: var(--moss-color);
+  color: var(--text-inverse);
+  border: 2px solid var(--primary-color);
+}
+
+.btn-sunset {
+  background-color: var(--sunset-color);
+  color: var(--text-inverse);
+  border: 2px solid var(--earth-color);
+}
+
+/* Cartes nature */
+.card-forest {
+  background-color: var(--gray-50);
+  border: 2px solid var(--forest-color);
+  border-radius: var(--radius-lg);
+}
+
+.card-earth {
+  background-color: var(--background-secondary);
+  border: 2px solid var(--earth-color);
+  border-radius: var(--radius-lg);
+}
+
+.card-moss {
+  background-color: var(--gray-100);
+  border: 2px solid var(--moss-color);
+  border-radius: var(--radius-lg);
+}
+
+.card-bark {
+  background-color: var(--background-secondary);
+  border: 2px solid var(--bark-color);
+  border-radius: var(--radius-lg);
+}
+
+/* Marqueurs d'animaux */
+.animal-marker {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--forest-color);
+  border: 3px solid var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.user-marker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  border: 2px solid var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+}
+
+/* Labels d'observation */
+.observation-label {
+  background-color: var(--background-overlay);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-lg);
+  margin-top: var(--spacing-xs);
+  max-width: 120px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--forest-color);
+}
+
+/* Boutons de contrôle nature */
+.control-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--background-overlay);
+  border: 1px solid var(--forest-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.control-button:hover {
+  background-color: var(--forest-color);
+  color: var(--text-inverse);
+  transform: scale(1.05);
+}
+
+/* Overlay d'informations nature */
+.info-overlay {
+  background-color: var(--background-overlay);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--forest-color);
+  box-shadow: var(--shadow-md);
+}
+
+/* Texte des coordonnées */
+.coordinates-text {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  text-align: center;
+  font-family: var(--font-family-mono);
+}
+
+.accuracy-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: var(--spacing-xs);
+}
+
+/* Boutons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 44px; /* Taille minimale pour l'accessibilité tactile */
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--text-inverse);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-success {
+  background-color: var(--success-color);
+  color: var(--text-inverse);
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: var(--success-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-warning {
+  background-color: var(--warning-color);
+  color: var(--text-inverse);
+}
+
+.btn-error {
+  background-color: var(--error-color);
+  color: var(--text-inverse);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: var(--primary-color);
+  color: var(--text-inverse);
+}
+
+.btn-close {
+  background-color: var(--gray-200);
+  color: var(--text-primary);
+}
+
+.btn-close:hover:not(:disabled) {
+  background-color: var(--gray-300);
+}
+
+/* Tailles de boutons */
+.btn-sm {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  min-height: 32px;
+}
+
+.btn-lg {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-lg);
+  min-height: 56px;
+}
+
+/* Cartes */
+.card {
+  background-color: var(--background-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+}
+
+.card-elevated {
+  box-shadow: var(--shadow-md);
+}
+
+.card-overlay {
+  background-color: var(--background-overlay);
+  backdrop-filter: blur(10px);
+}
+
+/* Inputs */
+.input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  background-color: var(--background-secondary);
+  transition: border-color var(--transition-fast);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.input-error {
+  border-color: var(--error-color);
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.1);
+}
+
+/* Labels */
+.label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.label-required::after {
+  content: ' *';
+  color: var(--error-color);
+}
+
+/* ============================================
+   LAYOUTS
+   ============================================ */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.gap-md {
+  gap: var(--spacing-md);
+}
+
+.gap-lg {
+  gap: var(--spacing-lg);
+}
+
+/* ============================================
+   TYPOGRAPHIE
+   ============================================ */
+
+.text-xs {
+  font-size: var(--font-size-xs);
+}
+
+.text-sm {
+  font-size: var(--font-size-sm);
+}
+
+.text-base {
+  font-size: var(--font-size-base);
+}
+
+.text-lg {
+  font-size: var(--font-size-lg);
+}
+
+.text-xl {
+  font-size: var(--font-size-xl);
+}
+
+.text-2xl {
+  font-size: var(--font-size-2xl);
+}
+
+.text-3xl {
+  font-size: var(--font-size-3xl);
+}
+
+.text-4xl {
+  font-size: var(--font-size-4xl);
+}
+
+.font-normal {
+  font-weight: var(--font-weight-normal);
+}
+
+.font-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.font-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-tertiary {
+  color: var(--text-tertiary);
+}
+
+.text-inverse {
+  color: var(--text-inverse);
+}
+
+.text-success {
+  color: var(--success-color);
+}
+
+.text-warning {
+  color: var(--warning-color);
+}
+
+.text-error {
+  color: var(--error-color);
+}
+
+/* ============================================
+   ESPACEMENT
+   ============================================ */
+
+.p-xs { padding: var(--spacing-xs); }
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+.p-xl { padding: var(--spacing-xl); }
+
+.px-xs { padding-left: var(--spacing-xs); padding-right: var(--spacing-xs); }
+.px-sm { padding-left: var(--spacing-sm); padding-right: var(--spacing-sm); }
+.px-md { padding-left: var(--spacing-md); padding-right: var(--spacing-md); }
+.px-lg { padding-left: var(--spacing-lg); padding-right: var(--spacing-lg); }
+.px-xl { padding-left: var(--spacing-xl); padding-right: var(--spacing-xl); }
+
+.py-xs { padding-top: var(--spacing-xs); padding-bottom: var(--spacing-xs); }
+.py-sm { padding-top: var(--spacing-sm); padding-bottom: var(--spacing-sm); }
+.py-md { padding-top: var(--spacing-md); padding-bottom: var(--spacing-md); }
+.py-lg { padding-top: var(--spacing-lg); padding-bottom: var(--spacing-lg); }
+.py-xl { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-xl); }
+
+.m-xs { margin: var(--spacing-xs); }
+.m-sm { margin: var(--spacing-sm); }
+.m-md { margin: var(--spacing-md); }
+.m-lg { margin: var(--spacing-lg); }
+.m-xl { margin: var(--spacing-xl); }
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+.my-auto { margin-top: auto; margin-bottom: auto; }
+
+/* ============================================
+   UTILITAIRES
+   ============================================ */
+
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+
+.hidden { display: none; }
+.block { display: block; }
+.inline { display: inline; }
+.inline-block { display: inline-block; }
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+
+.top-0 { top: 0; }
+.right-0 { right: 0; }
+.bottom-0 { bottom: 0; }
+.left-0 { left: 0; }
+
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.z-30 { z-index: 30; }
+.z-40 { z-index: 40; }
+.z-50 { z-index: 50; }
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn var(--transition-normal) ease-out;
+}
+
+.animate-slideInUp {
+  animation: slideInUp var(--transition-normal) ease-out;
+}
+
+.animate-slideInDown {
+  animation: slideInDown var(--transition-normal) ease-out;
+}
+
+.animate-scaleIn {
+  animation: scaleIn var(--transition-normal) ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .btn {
+    min-height: 48px; /* Taille tactile optimale pour mobile */
+  }
+  
+  .card {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .text-4xl { font-size: var(--font-size-3xl); }
+  .text-3xl { font-size: var(--font-size-2xl); }
+  .text-2xl { font-size: var(--font-size-xl); }
+}
+
+/* ============================================
+   ACCESSIBILITÉ
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visible pour l'accessibilité clavier */
+.btn:focus-visible,
+.input:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   THÈME SOMBRE - NUIT SAUVAGE
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Couleurs de fond - Nuit sauvage */
+    --background-primary: #0D1B0A; /* Vert très sombre */
+    --background-secondary: #1A2E1A; /* Vert sombre */
+    --background-overlay: rgba(26, 46, 26, 0.95); /* Vert sombre transparent */
+    
+    /* Couleurs de texte - Nuit */
+    --text-primary: #E8F5E8; /* Vert très clair */
+    --text-secondary: #B8D4B8; /* Vert clair */
+    --text-tertiary: #8FB38F; /* Vert moyen */
+    --text-inverse: #0D1B0A; /* Vert très sombre */
+    
+    /* Couleurs neutres - Nuit */
+    --white: #1A2E1A; /* Vert sombre */
+    --black: #E8F5E8; /* Vert très clair */
+    --gray-50: #0D1B0A; /* Vert très sombre */
+    --gray-100: #1A2E1A; /* Vert sombre */
+    --gray-200: #2A4A2A; /* Vert moyen sombre */
+    --gray-300: #3A5A3A; /* Vert moyen */
+    --gray-400: #4A6A4A; /* Vert moyen clair */
+    --gray-500: #5A7A5A; /* Vert clair */
+    --gray-600: #6A8A6A; /* Vert plus clair */
+    --gray-700: #7A9A7A; /* Vert très clair */
+    --gray-800: #8AAA8A; /* Vert très clair */
+    --gray-900: #9ABA9A; /* Vert très clair */
+    
+    /* Couleurs spéciales - Nuit */
+    --forest-color: #2D5016; /* Vert forêt plus clair */
+    --earth-color: #5D4037; /* Brun écorce plus clair */
+    --moss-color: #4A7C59; /* Vert mousse plus clair */
+    --bark-color: #8D6E63; /* Brun écorce plus clair */
+    --leaf-color: #66BB6A; /* Vert feuille plus clair */
+    --sky-color: #42A5F5; /* Bleu ciel plus clair */
+    --sunset-color: #FF8A65; /* Orange coucher plus clair */
+    --stone-color: #90A4AE; /* Gris pierre plus clair */
+  }
+}

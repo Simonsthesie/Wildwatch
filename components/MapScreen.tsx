@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { MAP_CONFIG, MAPBOX_ACCESS_TOKEN } from '../config/mapbox';
 import { StorageService } from '../services/storageService';
+import { colors, mapStyles, theme, wildlifeStyles } from '../styles';
 import { Observation, ObservationFormData } from '../types/observation';
 import { EditObservationModal } from './EditObservationModal';
 import { ObservationModal } from './ObservationModal';
@@ -92,6 +93,7 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
         latitude: selectedCoordinate[1],
         longitude: selectedCoordinate[0],
         imageUri: formData.imageUri,
+        icon: formData.icon,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
@@ -172,10 +174,8 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
           id="user-location"
           coordinate={[location.coords.longitude, location.coords.latitude]}
         >
-          <View style={styles.markerContainer}>
-            <View style={styles.marker}>
-              <Text style={styles.markerText}>📍</Text>
-            </View>
+          <View style={styles.userLocationContainer}>
+            <Text style={styles.userLocationMarker}>📍</Text>
           </View>
         </Mapbox.PointAnnotation>
 
@@ -209,7 +209,7 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
                 onPress={() => handleMarkerPress(observation)}
                 activeOpacity={0.7}
               >
-                <Text style={styles.observationMarkerText}>🦌</Text>
+                <Text style={styles.observationMarkerText}>{observation.icon}</Text>
               </TouchableOpacity>
               <View style={styles.observationLabel}>
                 <Text style={styles.observationLabelText} numberOfLines={1}>
@@ -268,71 +268,38 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    ...theme.layoutStyles.container,
+    backgroundColor: colors.background,
   },
   map: {
     flex: 1,
   },
   controls: {
-    position: 'absolute',
-    top: 60,
-    right: 20,
-    gap: 10,
+    ...mapStyles.mapControls,
   },
   infoOverlay: {
-    position: 'absolute',
-    bottom: 40,
-    left: 20,
-    right: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    padding: 16,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    ...mapStyles.positionInfo,
   },
   coordinatesText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
-    textAlign: 'center',
-    fontFamily: 'monospace',
+    ...mapStyles.coordinatesText,
   },
   accuracyText: {
-    fontSize: 14,
-    color: '#666',
+    ...mapStyles.accuracyText,
+  },
+  userLocationContainer: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  userLocationMarker: {
+    fontSize: 40,
     textAlign: 'center',
-    marginTop: 4,
-  },
-  markerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  marker: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#007AFF',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  markerText: {
-    fontSize: 16,
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    shadowOpacity: 0,
+    elevation: 0,
   },
   observationMarkerContainer: {
     alignItems: 'center',
@@ -342,43 +309,22 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#34C759',
+    backgroundColor: colors.forest,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 3,
-    borderColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    position: 'relative',
   },
   observationMarkerText: {
-    fontSize: 20,
+    fontSize: theme.fontSize.xl,
   },
   observationLabel: {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-    marginTop: 4,
-    maxWidth: 120,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 3,
+    ...wildlifeStyles.observationLabel,
+    marginTop: theme.spacing.sm,
   },
   observationLabelText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#333',
+    ...theme.typography.bodySmall,
+    color: colors.textPrimary,
     textAlign: 'center',
+    fontWeight: theme.fontWeight.semibold,
   },
 });

@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { colors, inputStyles, theme, typography } from '../styles';
 import { Observation, ObservationFormData } from '../types/observation';
 import { Button } from './ui';
 
@@ -35,6 +36,7 @@ export const EditObservationModal: React.FC<EditObservationModalProps> = ({
     name: '',
     date: '',
     imageUri: undefined,
+    icon: '🦌',
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,6 +46,7 @@ export const EditObservationModal: React.FC<EditObservationModalProps> = ({
         name: observation.name,
         date: observation.date,
         imageUri: observation.imageUri,
+        icon: observation.icon,
       });
     }
   }, [observation]);
@@ -144,6 +147,7 @@ export const EditObservationModal: React.FC<EditObservationModalProps> = ({
         name: observation.name,
         date: observation.date,
         imageUri: observation.imageUri,
+        icon: observation.icon,
       });
     }
     onClose();
@@ -180,6 +184,35 @@ export const EditObservationModal: React.FC<EditObservationModalProps> = ({
                 placeholder="Ex: Renard roux, Aigle royal, Pigeon avec un pied..."
                 placeholderTextColor="#999"
               />
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Type d'observation</Text>
+              <View style={styles.iconSelector}>
+                {[
+                  { icon: '🦌', label: 'Animal' },
+                  { icon: '🍄', label: 'Champignon' },
+                  { icon: '🌿', label: 'Plante' },
+                  { icon: '🦅', label: 'Oiseau' },
+                ].map((option) => (
+                  <TouchableOpacity
+                    key={option.icon}
+                    style={[
+                      styles.iconOption,
+                      formData.icon === option.icon && styles.iconOptionSelected
+                    ]}
+                    onPress={() => setFormData(prev => ({ ...prev, icon: option.icon }))}
+                  >
+                    <Text style={styles.iconText}>{option.icon}</Text>
+                    <Text style={[
+                      styles.iconLabel,
+                      formData.icon === option.icon && styles.iconLabelSelected
+                    ]}>
+                      {option.label}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>
 
             <View style={styles.inputGroup}>
@@ -260,50 +293,42 @@ export const EditObservationModal: React.FC<EditObservationModalProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
   },
   header: {
-    padding: 20,
-    backgroundColor: 'white',
+    padding: theme.spacing.lg,
+    backgroundColor: colors.backgroundSecondary,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: colors.gray200,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 8,
+    ...typography.h3,
+    color: colors.primary,
+    marginBottom: theme.spacing.sm,
   },
   subtitle: {
-    fontSize: 14,
-    color: '#666',
-    fontFamily: 'monospace',
+    ...typography.monoSmall,
+    color: colors.textSecondary,
   },
   form: {
-    padding: 20,
+    padding: theme.spacing.lg,
   },
   inputGroup: {
-    marginBottom: 20,
+    marginBottom: theme.spacing.lg,
   },
   label: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 8,
+    ...typography.label,
+    color: colors.textPrimary,
+    marginBottom: theme.spacing.sm,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 12,
-    fontSize: 16,
-    backgroundColor: 'white',
+    ...inputStyles.base,
   },
   imageContainer: {
-    marginBottom: 12,
+    marginBottom: theme.spacing.sm,
   },
   imageWrapper: {
     position: 'relative',
@@ -312,7 +337,7 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 150,
-    borderRadius: 8,
+    borderRadius: theme.borderRadius.md,
   },
   removeImageButton: {
     position: 'absolute',
@@ -321,35 +346,67 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#ff4444',
+    backgroundColor: colors.error,
     justifyContent: 'center',
     alignItems: 'center',
   },
   removeImageText: {
-    color: 'white',
-    fontSize: 12,
-    fontWeight: 'bold',
+    color: colors.textInverse,
+    fontSize: theme.fontSize.xs,
+    fontWeight: theme.fontWeight.bold,
   },
   imagePlaceholder: {
     width: 200,
     height: 150,
-    borderRadius: 8,
-    backgroundColor: '#f0f0f0',
+    borderRadius: theme.borderRadius.md,
+    backgroundColor: colors.gray100,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
   },
   imagePlaceholderText: {
-    color: '#999',
-    fontSize: 14,
+    color: colors.textTertiary,
+    fontSize: theme.fontSize.sm,
   },
   imageButtons: {
     flexDirection: 'row',
-    gap: 12,
+    gap: theme.spacing.sm,
   },
   buttons: {
     flexDirection: 'row',
-    padding: 20,
-    gap: 8,
+    padding: theme.spacing.lg,
+    gap: theme.spacing.sm,
+  },
+  iconSelector: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: theme.spacing.sm,
+  },
+  iconOption: {
+    flex: 1,
+    alignItems: 'center',
+    padding: theme.spacing.md,
+    borderRadius: theme.borderRadius.md,
+    backgroundColor: colors.gray100,
+    borderWidth: 2,
+    borderColor: 'transparent',
+  },
+  iconOptionSelected: {
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+  },
+  iconText: {
+    fontSize: 24,
+    marginBottom: theme.spacing.xs,
+  },
+  iconLabel: {
+    ...typography.body,
+    fontSize: theme.fontSize.sm,
+    color: colors.textSecondary,
+    textAlign: 'center',
+  },
+  iconLabelSelected: {
+    color: colors.textInverse,
+    fontWeight: theme.fontWeight.semibold,
   },
 });

@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     ViewStyle,
 } from 'react-native';
+import { colors, theme, wildlifeStyles } from '../../styles';
 
 export type ControlButtonVariant = 'default' | 'close';
 
@@ -49,39 +50,30 @@ export const ControlButton: React.FC<ControlButtonProps> = ({
 
 const styles = StyleSheet.create({
   base: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    ...wildlifeStyles.controlButton,
   },
   
   default: {
-    backgroundColor: 'white',
+    backgroundColor: colors.backgroundOverlay,
+    borderColor: colors.forest,
   },
   
   close: {
-    backgroundColor: '#ff4444',
+    backgroundColor: colors.error,
+    borderColor: colors.bark,
   },
   
   text: {
-    fontSize: 20,
+    fontSize: theme.fontSize.lg,
+    color: colors.textPrimary,
   },
   
   defaultText: {
-    // Pas de couleur spécifique, utilise la couleur par défaut
+    color: colors.primary,
   },
   
   closeText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: colors.textInverse,
+    fontWeight: theme.fontWeight.bold,
   },
 });
