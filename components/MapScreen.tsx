@@ -8,6 +8,7 @@ import { colors, mapStyles, theme, wildlifeStyles } from '../styles';
 import { Observation, ObservationFormData } from '../types/observation';
 import { EditObservationModal } from './EditObservationModal';
 import { ObservationModal } from './ObservationModal';
+import { ObservationsListModal } from './ObservationsListModal';
 import { ControlButton } from './ui';
 
 interface MapScreenProps {
@@ -21,6 +22,7 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
   const [observations, setObservations] = useState<Observation[]>([]);
   const [showObservationModal, setShowObservationModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showListModal, setShowListModal] = useState(false);
   const [selectedObservation, setSelectedObservation] = useState<Observation | null>(null);
   const [selectedCoordinate, setSelectedCoordinate] = useState<[number, number]>([0, 0]);
   const [newMarkerAnimation] = useState(new Animated.Value(0));
@@ -80,6 +82,20 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
   };
 
   const handleMarkerPress = (observation: Observation) => {
+    setSelectedObservation(observation);
+    setShowEditModal(true);
+  };
+
+  const handleShowList = () => {
+    setShowListModal(true);
+  };
+
+  const handleCloseList = () => {
+    setShowListModal(false);
+  };
+
+  const handleEditFromList = (observation: Observation) => {
+    setShowListModal(false);
     setSelectedObservation(observation);
     setShowEditModal(true);
   };
@@ -230,6 +246,12 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
         />
         
         <ControlButton 
+          title="📋" 
+          onPress={handleShowList} 
+          variant="default"
+        />
+        
+        <ControlButton 
           title="✕" 
           onPress={onClose} 
           variant="close"
@@ -261,6 +283,13 @@ export const MapScreen: React.FC<MapScreenProps> = ({ location, onClose }) => {
         onClose={() => setShowEditModal(false)}
         onSave={handleUpdateObservation}
         onDelete={handleDeleteObservation}
+      />
+
+      <ObservationsListModal
+        visible={showListModal}
+        observations={observations}
+        onClose={handleCloseList}
+        onEditObservation={handleEditFromList}
       />
     </View>
   );
