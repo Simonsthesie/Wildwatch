@@ -16,6 +16,7 @@ import {
 import { OBSERVATION_ICONS } from '../constants';
 import { colors, inputStyles, theme, typography } from '../styles';
 import { ObservationFormData } from '../types/observation';
+import { ImageIdentificationModal } from './ImageIdentificationModal';
 import { Button } from './ui';
 
 interface ObservationModalProps {
@@ -39,6 +40,7 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [showIdentification, setShowIdentification] = useState(false);
 
   const handleImagePicker = async () => {
     try {
@@ -49,7 +51,7 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
       }
 
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: ['images'],
         allowsEditing: true,
         aspect: [4, 3],
         quality: 0.8,
@@ -62,6 +64,24 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
       console.error('Erreur lors de la sélection d\'image:', error);
       Alert.alert('Erreur', 'Impossible de sélectionner l\'image.');
     }
+  };
+
+  const handleIdentifyImage = () => {
+    if (formData.imageUri) {
+      setShowIdentification(true);
+    }
+  };
+
+  const handleUseIdentification = (result: any) => {
+    // Mettre à jour le formulaire avec les résultats de l'identification
+    setFormData(prev => ({
+      ...prev,
+      name: result.name,
+      icon: result.category === 'plant' ? '🌿' : 
+            result.category === 'animal' ? '🦌' : 
+            result.category === 'fungus' ? '🍄' : '🔍'
+    }));
+    setShowIdentification(false);
   };
 
   const handleCamera = async () => {
@@ -223,26 +243,44 @@ export const ObservationModal: React.FC<ObservationModalProps> = ({
                   variant="primary"
                   size="small"
                 />
+                {formData.imageUri && (
+                  <Button 
+                    title="🔍 Identifier" 
+                    onPress={handleIdentifyImage} 
+                    variant="forest"
+                    size="small"
+                  />
+                )}
               </View>
             </View>
           </View>
 
-          <View style={styles.buttons}>
-            <Button 
-              title="Annuler" 
-              onPress={handleCancel} 
-              variant="outline"
-            />
-            <Button 
-              title={isLoading ? 'Enregistrement...' : 'Enregistrer'} 
-              onPress={handleSave} 
-              variant="success"
-              loading={isLoading}
-              disabled={isLoading}
-            />
-          </View>
         </ScrollView>
+        
+        {/* Boutons fixes en bas */}
+        <View style={styles.buttons}>
+          <Button 
+            title="Annuler" 
+            onPress={handleCancel} 
+            variant="outline"
+          />
+          <Button 
+            title={isLoading ? 'Enregistrement...' : 'Enregistrer'} 
+            onPress={handleSave} 
+            variant="success"
+            loading={isLoading}
+            disabled={isLoading}
+          />
+        </View>
       </KeyboardAvoidingView>
+
+      {/* Modal d'identification d'image */}
+      <ImageIdentificationModal
+        visible={showIdentification}
+        onClose={() => setShowIdentification(false)}
+        onUseResult={handleUseIdentification}
+        imageUri={formData.imageUri || ''}
+      />
     </Modal>
   );
 };
@@ -352,8 +390,13 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: theme.spacing.lg,
-    gap: theme.spacing.sm,
+    paddingTop: theme.spacing.md,
+    gap: theme.spacing.md,
+    backgroundColor: colors.background,
+    borderTopWidth: 1,
+    borderTopColor: colors.gray200,
   },
   iconSelector: {
     flexDirection: 'row',

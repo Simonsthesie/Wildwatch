@@ -370,8 +370,13 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: theme.spacing.lg,
-    gap: theme.spacing.sm,
+    paddingTop: theme.spacing.md,
+    gap: theme.spacing.md,
+    backgroundColor: colors.background,
+    borderTopWidth: 1,
+    borderTopColor: colors.gray200,
   },
   iconSelector: {
     flexDirection: 'row',

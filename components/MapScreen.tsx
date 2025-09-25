@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { MAP_CONFIG, MAPBOX_ACCESS_TOKEN } from '../config/mapbox';
 import { StorageService } from '../services/storageService';
-import { colors, mapStyles, theme, wildlifeStyles } from '../styles';
+import { colors, mapStyles, theme } from '../styles';
 import { Observation, ObservationFormData } from '../types/observation';
 import { EditObservationModal } from './EditObservationModal';
 import { ObservationModal } from './ObservationModal';
@@ -347,13 +347,19 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSize.xl,
   },
   observationLabel: {
-    ...wildlifeStyles.observationLabel,
     marginTop: theme.spacing.sm,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    borderRadius: theme.borderRadius.sm,
+    paddingHorizontal: theme.spacing.sm,
+    paddingVertical: theme.spacing.xs,
+    backgroundColor: colors.background,
+    maxWidth: 120,
   },
   observationLabelText: {
-    ...theme.typography.bodySmall,
     color: colors.textPrimary,
     textAlign: 'center',
-    fontWeight: theme.fontWeight.semibold,
+    fontWeight: theme.fontWeight.bold,
+    fontSize: theme.fontSize.sm,
   },
 });

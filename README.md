@@ -26,8 +26,16 @@ Wildwatch est une application mobile qui permet aux utilisateurs de :
 ### 🦌 Observations Nature
 - **4 types d'observations** : Animaux, Champignons, Plantes, Oiseaux
 - **Icônes personnalisées** : 🦌 🍄 🌿 🦅
+- **Identification IA** : Reconnaissance automatique avec Gemini
 - **Photos** : Prise de photo ou sélection depuis la galerie
 - **Géolocalisation** : Chaque observation est liée à une position GPS
+
+### 🔍 Identification IA
+- **Reconnaissance automatique** : Plantes, animaux, champignons
+- **Noms scientifiques** : Classification taxonomique précise
+- **Informations de sécurité** : Alertes pour espèces dangereuses
+- **Habitat naturel** : Contexte environnemental
+- **Score de confiance** : Fiabilité de l'identification
 
 ### 🗺️ Carte Interactive
 - **Mapbox** intégration professionnelle
@@ -47,6 +55,8 @@ Wildwatch est une application mobile qui permet aux utilisateurs de :
 - Node.js 18+ 
 - npm ou yarn
 - Expo CLI
+- Compte Mapbox (gratuit)
+- Clé API Gemini (optionnel, pour l'identification IA)
 - iOS Simulator (Mac) ou Android Studio (Windows/Linux)
 
 ### Installation rapide
@@ -169,7 +179,17 @@ Créez un fichier `.env` à la racine :
 
 ```env
 EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN=your_mapbox_token_here
+EXPO_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
 ```
+
+### Configuration Gemini AI (Optionnel)
+
+Pour activer l'identification automatique d'images :
+
+1. **Obtenez une clé API** sur [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. **Ajoutez-la** à votre fichier `.env` (voir ci-dessus)
+
+📖 **Guide détaillé** : Voir [GEMINI_SETUP.md](./GEMINI_SETUP.md)
 
 ### Configuration Mapbox
 
